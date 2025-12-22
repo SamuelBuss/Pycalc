@@ -7,28 +7,38 @@ def subtraction(a, b):
 def multiplication(a, b):
     return a * b
 
-def division(a, b):
-    if b == 0:
-        return "Error: You cannot divide by zero."
-    return a / b
+def divisionrem(a, b):
+    return a // b
 equation = input("Enter your equation: ")
 equation = equation.split()
 if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
-a = equation[0]
+a = float(equation[0])
 operator = equation[1]
-b = equation[2]
+b = float(equation[2])
+if b == 0 and operator == '/':
+    print("Error: Division by zero is not allowed.")
+    exit()
 if operator not in ['+', '-', '*', '/']:
     print("Error: Unsupported operator. Please use one of +, -, *, /.")
     exit()
+if a % b != 0 and operator == '/':
+    remainder = int(a % b)
+else:
+    remainder = ""
 if operator == '+':
-    result = addition(float(a), float(b))
+    result = addition(a, b)
 elif operator == '-':
-    result = subtraction(float(a), float(b))
+    result = subtraction(a, b)
 elif operator == '*':
-    result = multiplication(float(a), float(b))
+    result = multiplication(a, b)
 elif operator == '/':
-    result = division(float(a), float(b))
-print("Result:", result)
+    if a % b == 0:
+        result = divisionrem(a, b)
+        print("Result:", int(result))
+        exit()
+    print("Result:", int(divisionrem(a, b)), "Remainder:", remainder)
+    exit()
+print("Result:", float(result))
 exit()
