@@ -32,30 +32,44 @@ def divisionrem(a, b):
     """Return integer division (floor division) a // b"""
     return a // b
 
+def format_number(x):
+    """Format numbers for display: show integers without trailing .0"""
+    # For floats that are whole numbers, return as int
+    if isinstance(x, float):
+        if x.is_integer():
+            return int(x)
+        return x
+    return x
+
 # --- parse input ---
 # Expected input format: number operator number (e.g., "10 / 3")
 equation = input("Enter your equation: ")
 equation = equation.split()
+# Validate input lenght
 if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
 
-# Convert input list to float variables
-a = float(equation[0])
+# Errors for wrong input
+# Validate that the first and third elements are numbers (support floats and negatives)
 operator = equation[1]
-b = float(equation[2])
-
-# Validate operator and check for division by zero
+try:
+    a = float(equation[0])
+    b = float(equation[2])
+except ValueError:
+    print("Error: Please enter valid numbers.")
+    exit()
+# Validate division by zero
 if b == 0 and operator == '/':
     print("Error: Division by zero is not allowed.")
     exit()
+# Validate operator
 if operator not in ['+', '-', '*', '/']:
     print("Error: Unsupported operator. Please use one of +, -, *, /.")
     exit()
-
 # Determine remainder when doing division (if applicable)
-if a % b != 0 and operator == '/':
-    remainder = int(a % b)
+if operator == '/' and a % b != 0:
+    remainder = a % b
 else:
     remainder = ""
 
@@ -75,13 +89,13 @@ if remainderoption == True and operator == "/":
     if a % b == 0:
         # Exact division: show integer result (no remainder)
         result = divisionrem(a, b)
-        print("Result:", int(result))
+        print("Result:", format_number(result))
         exit()
     # Show result and remainder separately
-    print("Result:", int(divisionrem(a, b)))
-    print("Remainder:", remainder)
+    print("Result:", format_number(divisionrem(a, b)))
+    print("Remainder:", format_number(remainder))
     exit()
 
-# Default: print the (floating-point) result
-print("Result:", float(result))
+# Default: print the result with clean formatting
+print("Result:", format_number(result))
 exit()
