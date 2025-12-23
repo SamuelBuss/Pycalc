@@ -1,3 +1,11 @@
+remainderoption = input("Do you want to see the remainder for division operations? (yes/no): ").strip().lower()
+if remainderoption not in ['yes', 'no']:
+    print("Error: Please answer with 'yes' or 'no'.")
+    exit()
+if remainderoption == 'no':
+    remainderoption = False
+else:
+    remainderoption = True
 def addition(a, b):
     return a + b
 
@@ -6,7 +14,8 @@ def subtraction(a, b):
 
 def multiplication(a, b):
     return a * b
-
+def division(a, b):
+    return a / b
 def divisionrem(a, b):
     return a // b
 equation = input("Enter your equation: ")
@@ -33,7 +42,9 @@ elif operator == '-':
     result = subtraction(a, b)
 elif operator == '*':
     result = multiplication(a, b)
-elif operator == '/':
+elif operator == '/' and remainderoption == False:
+    result = division(a, b)
+if remainderoption == True and operator == "/":
     if a % b == 0:
         result = divisionrem(a, b)
         print("Result:", int(result))
