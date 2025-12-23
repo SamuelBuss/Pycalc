@@ -1,6 +1,7 @@
 from time import sleep
 import configparser
 from pathlib import Path
+import re
 
 # Project settings file (INI) - created only at runtime
 SETTINGS_PATH = Path(__file__).parent / "settings.ini"
@@ -45,7 +46,7 @@ if remainderoption not in ['y', 'n', 'yes', 'no']:
 # Convert to t/f for easier checks later
 if remainderoption in ['n', 'no']:
     remainderoption = False
-else:
+else: 
     remainderoption = True
 
 # --- arithmetic helpers ---
@@ -81,12 +82,18 @@ def format_number(x):
 # --- parse input ---
 # Expected input format: number operator number (e.g., "10 / 3")
 equation = input("Enter your equation: ")
-equation = equation.split()
-# Validate input lenght
+equation = re.split(r'([+\-*/])', equation.strip())
+# Remove empty strings and strip whitespace
+equation = [p.strip() for p in equation if p.strip()]
+
+# Handle negative numbers: if first part is '-' or '+', merge with next part
+if len(equation) >= 2 and equation[0] in ['-', '+']:
+    equation = [equation[0] + equation[1]] + equation[2:]
+
+# Validate input length
 if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
-
 # Errors for wrong input
 # Validate that the first and third elements are numbers (support floats and negatives)
 operator = equation[1]

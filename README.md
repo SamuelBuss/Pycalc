@@ -4,9 +4,6 @@ Simple python calculator (for now)
 
 ## Roadmap
 
-
-- **Taking more types of input**
-  - Examples: `a*b`, `a* b`, `a *b`
 - **More operations**
   - `**`, `√` For now
 - **Mathematical constants** (pi)
@@ -17,3 +14,5 @@ Simple python calculator (for now)
 - ~~**Simple introduction with a setting**~~
 - ~~**Option to disable remainders**~~
 - ~~**Safety measures / errors**~~
+- ~~**Taking more types of input**~~
+  - ~~Examples: `a*b`, `a* b`, `a *b`~~
