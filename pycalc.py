@@ -1,4 +1,11 @@
-# Simple command-line calculator
+from time import sleep
+#Simple Introduction
+print("Welcome to my simple python calculator!")
+sleep(2)
+print("You can perform addition (+), subtraction (-), multiplication (*), and division (/).")
+sleep(2)
+print("Please enter your equation in the format: number operator number (e.g., 10 / 3)")
+sleep(1)
 # Ask the user whether they want to see the remainder for division operations
 remainderoption = input("Do you want to see the remainder for division operations? (yes/no): ").strip().lower()
 # Validate yes/no input
