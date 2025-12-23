@@ -13,4 +13,4 @@ Simple python calculator (for now)
 - **Mathematical constants** (pi)
 - **Brackets (parentheses)**
 - **GUI**
-- **Taking more thn
+- **Taking more than 2 numbers**

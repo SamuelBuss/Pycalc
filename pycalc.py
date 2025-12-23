@@ -5,7 +5,7 @@ remainderoption = input("Do you want to see the remainder for division operation
 if remainderoption not in ['yes', 'no']:
     print("Error: Please answer with 'yes' or 'no'.")
     exit()
-# Convert to boolean for easier checks later
+# Convert to t/f for easier checks later
 if remainderoption == 'no':
     remainderoption = False
 else:
@@ -40,7 +40,7 @@ if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
 
-# Convert operands to floats and capture the operator
+# Convert input list to float variables
 a = float(equation[0])
 operator = equation[1]
 b = float(equation[2])
@@ -77,7 +77,7 @@ if remainderoption == True and operator == "/":
         result = divisionrem(a, b)
         print("Result:", int(result))
         exit()
-    # Show quotient and remainder separately
+    # Show result and remainder separately
     print("Result:", int(divisionrem(a, b)))
     print("Remainder:", remainder)
     exit()
