@@ -14,3 +14,4 @@ Simple python calculator (for now)
 - **Brackets (parentheses)**
 - **GUI**
 - **Taking more than 2 numbers**
+- ~~**Simple introduction with a setting**~~

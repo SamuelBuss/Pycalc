@@ -19,3 +19,5 @@ Thumbs.db
 # Environment variables
 .env
 
+# User-specific settings (generated at runtime)
+settings.ini

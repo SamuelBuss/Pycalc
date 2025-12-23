@@ -1,19 +1,49 @@
 from time import sleep
-#Simple Introduction
-print("Welcome to my simple python calculator!")
-sleep(2)
-print("You can perform addition (+), subtraction (-), multiplication (*), and division (/).")
-sleep(2)
-print("Please enter your equation in the format: number operator number (e.g., 10 / 3)")
-sleep(1)
+import configparser
+from pathlib import Path
+
+# Project settings file (INI) - created only at runtime
+SETTINGS_PATH = Path(__file__).parent / "settings.ini"
+config = configparser.ConfigParser()
+if SETTINGS_PATH.exists():
+    config.read(SETTINGS_PATH)
+    try:
+        intro_enabled = config.getboolean("settings", "introduction", fallback=True)
+    except Exception:
+        intro_enabled = True
+else:
+    # First run: default to True, create file when user changes it
+    intro_enabled = True
+
+# Show the introduction only when enabled
+if intro_enabled:
+    print("Welcome to my simple python calculator!")
+    sleep(2)
+    print("You can perform addition (+), subtraction (-), multiplication (*), and division (/).")
+    sleep(2)
+    print("Please enter your equation in the format: number operator number (e.g., 10 / 3)")
+    sleep(1)
+
+    # Ask whether to show it next time; if user says no, save setting
+    ans = input("Do you wanna see the introduction next time? (Y/n) ").strip().lower()
+    if ans in ("n", "no"):
+        if not config.has_section("settings"):
+            config["settings"] = {}
+        config["settings"]["introduction"] = "false"
+        with SETTINGS_PATH.open("w") as f:
+            config.write(f)
+else:
+    # intro disabled; do nothing (skip intro)
+    pass
+
 # Ask the user whether they want to see the remainder for division operations
-remainderoption = input("Do you want to see the remainder for division operations? (yes/no): ").strip().lower()
+remainderoption = input("Do you want to see the remainder for division operations? (Y/n): ").strip().lower()
 # Validate yes/no input
-if remainderoption not in ['yes', 'no']:
+if remainderoption not in ['y', 'n', 'yes', 'no']:
     print("Error: Please answer with 'yes' or 'no'.")
     exit()
 # Convert to t/f for easier checks later
-if remainderoption == 'no':
+if remainderoption in ['n', 'no']:
     remainderoption = False
 else:
     remainderoption = True
