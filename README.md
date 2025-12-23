@@ -7,7 +7,7 @@ Simple python calculator (for now)
 - ~~**Option to disable remainders**~~
 - **Taking more types of input**
   - Examples: `a*b`, `a* b`, `a *b`
-- **Safety measures / errors**
+- ~~**Safety measures / errors**~~
 - **More operations**
   - `**`, `√` For now
 - **Mathematical constants** (pi)
