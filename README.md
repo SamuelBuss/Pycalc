@@ -4,15 +4,13 @@ Simple python calculator (for now)
 
 ## Roadmap
 
-- **Option to disable remainders**
+- ~~**Option to disable remainders**~~
 - **Taking more types of input**
   - Examples: `a*b`, `a* b`, `a *b`
 - **Safety measures / errors**
 - **More operations**
-  - Examples: `**` (power), `√` (square root)
+  - `**`, `√` For now
 - **Mathematical constants** (pi)
 - **Brackets (parentheses)**
-- **GUI (graphical interface)**
-
-
-
+- **GUI**
+- **Taking more thn
