@@ -12,7 +12,7 @@ List of mathematical constants you can use instead of numbers:
 
 - **More operations**
   - `**`, `√` For now
-- ~~**Mathematical constants** (pi, e, tau, phi)~~
+
 - **Brackets (parentheses)**
 - **GUI**
 - **Taking more than 2 numbers**
@@ -22,3 +22,4 @@ List of mathematical constants you can use instead of numbers:
 - ~~**Safety measures / errors**~~
 - ~~**Taking more types of input**~~
   - ~~Examples: `a*b`, `a* b`, `a *b`~~
+- ~~**Mathematical constants** (pi, e, tau, phi)~~
