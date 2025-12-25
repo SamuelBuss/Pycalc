@@ -2,6 +2,7 @@ from time import sleep
 import configparser
 from pathlib import Path
 import re
+import math
 
 # Project settings file (INI) - created only at runtime
 SETTINGS_PATH = Path(__file__).parent / "settings.ini"
@@ -49,7 +50,24 @@ if remainderoption in ['n', 'no']:
 else: 
     remainderoption = True
 
+# --- mathematical constants ---
+CONSTANTS = {
+    'pi': math.pi,
+    'e': math.e,
+    'tau': math.tau,
+    'phi': (1 + math.sqrt(5)) / 2,  # Golden ratio
+}
+
 # --- arithmetic helpers ---
+def resolve_value(value_str):
+    """Resolve a value: check if it's a constant name, otherwise parse as float"""
+    if value_str.lower() in CONSTANTS:
+        return CONSTANTS[value_str.lower()]
+    try:
+        return float(value_str)
+    except ValueError:
+        raise ValueError(f"'{value_str}' is not a valid number or constant")
+
 def addition(a, b):
     """Return the sum of a and b"""
     return a + b
@@ -94,14 +112,13 @@ if len(equation) >= 2 and equation[0] in ['-', '+']:
 if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
-# Errors for wrong input
-# Validate that the first and third elements are numbers (support floats and negatives)
+# Parse operands (handles both numbers and constants)
 operator = equation[1]
 try:
-    a = float(equation[0])
-    b = float(equation[2])
-except ValueError:
-    print("Error: Please enter valid numbers.")
+    a = resolve_value(equation[0])
+    b = resolve_value(equation[2])
+except ValueError as e:
+    print(f"Error: {e}")
     exit()
 # Validate division by zero
 if b == 0 and operator == '/':
