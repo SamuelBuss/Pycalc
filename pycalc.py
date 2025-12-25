@@ -3,6 +3,7 @@ import configparser
 from pathlib import Path
 import re
 import math
+from typing import Union
 
 # Project settings file (INI) - created only at runtime
 SETTINGS_PATH = Path(__file__).parent / "settings.ini"
@@ -39,27 +40,24 @@ else:
     pass
 
 # Ask the user whether they want to see the remainder for division operations
-remainderoption = input("Do you want to see the remainder for division operations? (Y/n): ").strip().lower()
+remainderoption_input: str = input("Do you want to see the remainder for division operations? (Y/n): ").strip().lower()
 # Validate yes/no input
-if remainderoption not in ['y', 'n', 'yes', 'no']:
+if remainderoption_input not in ['y', 'n', 'yes', 'no']:
     print("Error: Please answer with 'yes' or 'no'.")
     exit()
 # Convert to t/f for easier checks later
-if remainderoption in ['n', 'no']:
-    remainderoption = False
-else: 
-    remainderoption = True
+remainderoption: bool = remainderoption_input not in ['n', 'no']
 
 # --- mathematical constants ---
 CONSTANTS = {
-    'pi': math.pi,
-    'e': math.e,
-    'tau': math.tau,
+    'pi': math.pi, # Pi constant
+    'e': math.e, # Euler's number
+    'tau': math.tau, # Tau constant (2 * pi)
     'phi': (1 + math.sqrt(5)) / 2,  # Golden ratio
 }
 
 # --- arithmetic helpers ---
-def resolve_value(value_str):
+def resolve_value(value_str: str) -> float:
     """Resolve a value: check if it's a constant name, otherwise parse as float"""
     if value_str.lower() in CONSTANTS:
         return CONSTANTS[value_str.lower()]
@@ -68,27 +66,27 @@ def resolve_value(value_str):
     except ValueError:
         raise ValueError(f"'{value_str}' is not a valid number or constant")
 
-def addition(a, b):
+def addition(a: float, b: float) -> float:
     """Return the sum of a and b"""
     return a + b
 
-def subtraction(a, b):
+def subtraction(a: float, b: float) -> float:
     """Return the difference a - b"""
     return a - b
 
-def multiplication(a, b):
+def multiplication(a: float, b: float) -> float:
     """Return the product of a and b"""
     return a * b
 
-def division(a, b):
+def division(a: float, b: float) -> float:
     """Return floating-point division a / b"""
     return a / b
 
-def divisionrem(a, b):
+def divisionrem(a: float, b: float) -> float:
     """Return integer division (floor division) a // b"""
     return a // b
 
-def format_number(x):
+def format_number(x: Union[float, int]) -> Union[int, float]:
     """Format numbers for display: show integers without trailing .0"""
     # For floats that are whole numbers, return as int
     if isinstance(x, float):
@@ -99,8 +97,8 @@ def format_number(x):
 
 # --- parse input ---
 # Expected input format: number operator number (e.g., "10 / 3")
-equation = input("Enter your equation: ")
-equation = re.split(r'([+\-*/])', equation.strip())
+equation_str: str = input("Enter your equation: ")
+equation: list[str] = re.split(r'([+\-*/])', equation_str.strip())
 # Remove empty strings and strip whitespace
 equation = [p.strip() for p in equation if p.strip()]
 
@@ -113,10 +111,10 @@ if len(equation) != 3:
     print("Error: Please enter an equation in the format: number operator number")
     exit()
 # Parse operands (handles both numbers and constants)
-operator = equation[1]
+operator: str = equation[1]
 try:
-    a = resolve_value(equation[0])
-    b = resolve_value(equation[2])
+    a: float = resolve_value(equation[0])
+    b: float = resolve_value(equation[2])
 except ValueError as e:
     print(f"Error: {e}")
     exit()
@@ -128,31 +126,28 @@ if b == 0 and operator == '/':
 if operator not in ['+', '-', '*', '/']:
     print("Error: Unsupported operator. Please use one of +, -, *, /.")
     exit()
-# Determine remainder when doing division (if applicable)
-if operator == '/' and a % b != 0:
-    remainder = a % b
-else:
-    remainder = ""
 
 # Perform the chosen operation
+result: float = 0.0
 if operator == '+':
     result = addition(a, b)
 elif operator == '-':
     result = subtraction(a, b)
 elif operator == '*':
     result = multiplication(a, b)
-elif operator == '/' and remainderoption == False:
+elif operator == '/' and remainderoption is False:
     # User doesn't want remainder: perform floating-point division
     result = division(a, b)
 
 # If user requested remainder, show integer division result and remainder
-if remainderoption == True and operator == "/":
+if remainderoption is True and operator == "/":
     if a % b == 0:
         # Exact division: show integer result (no remainder)
         result = divisionrem(a, b)
         print("Result:", format_number(result))
         exit()
     # Show result and remainder separately
+    remainder: float = a % b
     print("Result:", format_number(divisionrem(a, b)))
     print("Remainder:", format_number(remainder))
     exit()
