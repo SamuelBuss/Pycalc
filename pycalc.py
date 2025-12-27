@@ -150,8 +150,10 @@ if remainderoption is True and operator == "/":
     remainder: float = a % b
     print("Result:", format_number(divisionrem(a, b)))
     print("Remainder:", format_number(remainder))
+    print("Thank you for using the calculator!")
     exit()
 
 # Default: print the result with clean formatting
 print("Result:", format_number(result))
+print("Thank you for using the calculator!")
 exit()
